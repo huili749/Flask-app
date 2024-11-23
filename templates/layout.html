@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ICPG{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">ICPG</div>
+        <ul>
+            <li><a href="{{ url_for('generate') }}">Generate</a></li>
+            <li><a href="{{ url_for('explore') }}">Explore</a></li>
+            <li><a href="{{ url_for('library') }}">Library</a></li>
+            <li><a href="{{ url_for('create') }}">Create</a></li>
+        </ul>
+        <div class="menu">
+            <a href="{{ url_for('login') }}">Log in</a> |
+            <a href="{{ url_for('signup') }}">Sign up</a> |
+            <a href="{{ url_for('logout') }}">Log out</a>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}
+        <!-- Content will be injected here -->
+        {% endblock %}
+    </div>
+</body>
+</html>
