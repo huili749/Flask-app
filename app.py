@@ -29,20 +29,15 @@ def generate():
     """Home page with buttons for Generate and Library."""
     return "This is the Generate page!"
 
-@app.route('/explore')
-def explore():
-    """Home page with buttons for Generate and Library."""
-    return render_template('explore.html')
-
 @app.route('/library')
 def library():
     """Home page with buttons for Generate and Library."""
     return render_template('library.html')
 
-@app.route('/create')
+@app.route('/history')
 def create():
     """Home page with buttons for Generate and Library."""
-    return render_template('create.html')
+    return render_template('history.html')
 
 @app.route('/login')
 def login():

@@ -92,14 +92,14 @@ nav {
     background: linear-gradient(90deg, #fa0e78, #bb4eff, #0c1cff);
     padding: 10px 40px;
     position: sticky;
-    font-size: 15px;
+    font-size: 1rem;
     top: 0;
     z-index: 1000;
 }
 
 nav .logo a {
     text-decoration: none;
-    font-size: 40px;
+    font-size: 2rem;
     font-weight: bold;
     color: white;
 }
@@ -112,13 +112,14 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 20px;
+    margin: 0 1.5rem;
 }
 
 nav ul li a {
     text-decoration: none;
     text-transform: uppercase;
     color: white;
+    font-size: 0.9rem;
 }
 
 nav ul li a:hover {
@@ -128,12 +129,13 @@ nav ul li a:hover {
 nav .auth-buttons {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 nav .auth-buttons .signup-btn {
     text-decoration: none;
-    color: #ffffff; /* Black text */
+    color: #ffffff;
+    font-size: 0.9rem;
 }
 
 nav .auth-buttons .login-btn {
@@ -142,11 +144,12 @@ nav .auth-buttons .login-btn {
     background-color: #0A0A23; /* Dark navy background */
     padding: 8px 16px;
     border-radius: 20px; /* Rounded corners */
+    font-size: 0.9rem;
     transition: background-color 0.3s ease;
 }
 
 nav .auth-buttons .login-btn:hover {
-    background-color: #3b3bb5; /* Slightly lighter navy for hover */
+    background-color: #fd1f99; /* Slightly lighter navy for hover */
 }
 
 /* Responsive styles for vertical screens */
@@ -170,5 +173,99 @@ nav .auth-buttons .login-btn:hover {
         order: 2;
         flex: none;
         padding: 20px 20px 60px 20px;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    nav {
+        padding: 8px 20px; /* Reduce padding */
+        font-size: 0.9rem; /* Adjust font size for smaller screens */
+    }
+
+    nav .logo a {
+        font-size: 1.8rem; /* Scale down logo size */
+    }
+
+    nav ul li {
+        margin: 0 1rem; /* Reduce spacing between menu items */
+    }
+
+    nav ul li a {
+        font-size: 0.8rem; /* Adjust menu item font size */
+    }
+
+    nav .auth-buttons .signup-btn {
+        font-size: 0.8rem;
+    }
+
+    nav .auth-buttons .login-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px; /* Reduce button padding */
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: flex-start; /* Align to the left */
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+
+    nav .logo a {
+        display: flex;
+        font-size: 1.6rem;
+        margin: 20px 0; /* Add spacing below logo */
+    }
+
+    nav ul {
+        flex-direction: column; /* Stack menu items vertically */
+        width: 100%; /* Full width */
+    }
+
+    nav ul li {
+        margin: 5px 0; /* Add vertical spacing */
+    }
+
+    nav ul li a {
+        font-size: 0.8rem;
+    }
+
+    nav .auth-buttons {
+        flex: none; /* Prevent shrinking */
+        margin-left: auto; /* Keep aligned to the right */
+        margin-bottom: 10px;
+    }
+
+    nav ul li a,
+    nav .auth-buttons .signup-btn,
+    nav .auth-buttons .login-btn {
+        font-size: 0.8rem; /* Reduce font size */
+    }
+
+    nav .auth-buttons .login-btn {
+        padding: 6px 12px; /* Reduce button padding */
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        font-size: 0.7rem;
+        padding: 5px 10px; /* Reduce padding further */
+    }
+
+    nav .logo a {
+        font-size: 1.4rem; /* Scale down logo further */
+    }
+
+    nav ul li a {
+        font-size: 0.7rem;
+    }
+
+    nav .auth-buttons .signup-btn,
+    nav .auth-buttons .login-btn {
+        font-size: 0.7rem;
+        padding: 4px 4px; /* Reduce button size */
     }
 }
