@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ICPG{% endblock %}</title>
+    <title>{% block title %}ObjectifyAI{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
     <nav>
-        <div class="logo">ICPG</div>
+        <div class="logo">
+            <a href="{{ url_for('home') }}">OAI</a>
+        </div>
         <ul>
             <li><a href="{{ url_for('generate') }}">Generate</a></li>
             <li><a href="{{ url_for('explore') }}">Explore</a></li>
             <li><a href="{{ url_for('library') }}">Library</a></li>
             <li><a href="{{ url_for('create') }}">Create</a></li>
         </ul>
-        <div class="menu">
-            <a href="{{ url_for('login') }}">Log in</a> |
-            <a href="{{ url_for('signup') }}">Sign up</a> |
-            <a href="{{ url_for('logout') }}">Log out</a>
+        <div class="auth-buttons">
+            <a href="{{ url_for('signup') }}" class="signup-btn">Sign up</a>
+            <a href="{{ url_for('login') }}" class="login-btn">Log in</a>
         </div>
     </nav>
     <div class="container">

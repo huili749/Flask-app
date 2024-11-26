@@ -14,9 +14,14 @@ app.secret_key = '071ca08c98ef594f297a4304808d9c453893cd7459f6295a4d3a111ed66baa
 
 # Routes
 @app.route('/')
-def home():
+def index():
     """Home page with buttons for Generate and Library."""
     print("Home route is being accessed!") 
+    return render_template('index.html')
+
+@app.route('/home')
+def home():
+    """Home page with buttons for Generate and Library."""
     return render_template('home.html')
 
 @app.route('/generate')
