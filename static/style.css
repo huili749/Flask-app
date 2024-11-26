@@ -136,6 +136,32 @@ canvas {
     height: 100%;
 }
 
+/* Responsive Styles for iPads (768px to 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        flex-direction: row; /* Keep items side-by-side */
+        justify-content: center; /* Center items horizontally */
+        padding: 10px 20px; /* Adjust spacing */
+    }
+
+    .left-content {
+        flex: 1;
+        text-align: left; /* Align text to the left */
+        margin: 20px; /* Add space around content */
+    }
+
+    .right-content {
+        flex: 1;
+        justify-content: center; /* Center the canvas or image */
+        margin: 20px;
+    }
+
+    button.generate-btn {
+        font-size: 18px; /* Slightly larger for tablets */
+        padding: 12px 25px;
+    }
+}
+
 /* Responsive Styles for Smaller Screens */
 @media (max-width: 768px) {
     .container {
