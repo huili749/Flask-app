@@ -2,12 +2,12 @@
 body, html {
     margin: 0;
     padding: 0;
-    min-height: 100%; /* Allow vertical growth */
+    height: 100%;
     width: 100%;
     font-family: 'Lato', sans-serif;
-    overflow-x: hidden; /* Prevent horizontal overflow */
     display: flex;
     flex-direction: column;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Navigation bar */
@@ -28,6 +28,7 @@ nav .logo a {
     font-size: 40px;
     font-weight: bold;
     color: white;
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 nav ul {
@@ -35,6 +36,7 @@ nav ul {
     display: flex;
     margin: 0;
     padding: 0;
+    flex-wrap: wrap; /* Wrap items if screen space is limited */
 }
 
 nav ul li {
@@ -45,41 +47,74 @@ nav ul li a {
     text-decoration: none;
     text-transform: uppercase;
     color: white;
+    font-size: 14px; /* Adjust for better visibility on small screens */
 }
 
 nav ul li a:hover {
     text-decoration: underline;
 }
 
+nav .auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Ensure buttons wrap on smaller screens */
+}
+
+nav .auth-buttons .signup-btn {
+    text-decoration: none;
+    color: white; 
+    font-size: 14px;
+}
+
+nav .auth-buttons .login-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #0A0A23; /* Dark navy background */
+    padding: 8px 16px;
+    border-radius: 20px; /* Rounded corners */
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+nav .auth-buttons .login-btn:hover {
+    background-color: #3b3bb5; /* Slightly lighter navy for hover */
+}
+
 /* Homepage-specific styles */
 .container {
     display: flex;
-    flex-direction: column; /* Stack items for mobile by default */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
     width: 100%;
+    height: 100%;
 }
 
 .left-content {
     flex: 1;
-    padding: 20px;
-    text-align: center; /* Center-align for smaller screens */
+    padding: 50px 20px; /* Reduce padding for smaller screens */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: #000000;
     color: white;
+    text-align: center; /* Center align text by default */
 }
 
 .left-content h1 {
-    font-size: 2rem; /* Adjust font size for mobile */
+    font-size: 2.5rem; /* Adjust font size for better responsiveness */
+    font-style: italic;
     line-height: 1.6;
 }
 
 .left-content p {
-    font-size: 16px; /* Adjust font size for readability */
+    font-size: 18px;
     color: #ccc;
     line-height: 1.6;
-    padding: 10px 0;
+    margin: 20px 0; /* Add vertical spacing */
 }
 
 .generate-btn {
-    font-size: 14px;
+    font-size: 16px;
     background-color: #da006a;
     color: white;
     border: none;
@@ -98,6 +133,9 @@ nav ul li a:hover {
     position: relative;
     background-color: black;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 canvas {
@@ -106,39 +144,71 @@ canvas {
     top: 0;
     left: 0;
     width: 100%;
-    height: auto; /* Maintain aspect ratio */
+    height: 100%;
 }
 
 /* Responsive Styles for iPads (768px to 1024px) */
 @media (min-width: 768px) and (max-width: 1024px) {
     .container {
         flex-direction: row; /* Keep items side-by-side */
+        justify-content: center;
+        padding: 20px; /* Adjust spacing */
     }
 
-    .left-content,
+    .left-content {
+        text-align: left; /* Align text to the left */
+        padding: 40px;
+    }
+
     .right-content {
-        margin: 10px; /* Add spacing for aesthetics */
+        justify-content: center; /* Center the canvas or image */
     }
 
-    .generate-btn {
-        font-size: 16px;
+    button.generate-btn {
+        font-size: 18px; /* Slightly larger for tablets */
+        padding: 12px 30px;
     }
 }
 
-/* Responsive Styles for Smaller Screens */
+/* Responsive Styles for Smaller Screens (Phones) */
 @media (max-width: 768px) {
     .container {
         flex-direction: column; /* Stack items vertically */
+        height: auto; /* Allow content to grow vertically */
     }
 
     .left-content,
     .right-content {
-        width: 100%; /* Make sections take full width */
+        width: 100%; /* Make each section take full width */
+        margin: 0;
         padding: 20px;
     }
 
-    .generate-btn {
+    .left-content {
+        text-align: center; /* Center text on small screens */
+    }
+
+    button.generate-btn {
         font-size: 14px;
-        padding: 8px 16px;
+        padding: 10px 20px;
+    }
+}
+
+/* Prevent content from exceeding viewport width */
+@media (max-width: 480px) {
+    nav ul li {
+        margin: 0 10px; /* Reduce spacing for nav links */
+    }
+
+    nav .logo a {
+        font-size: 30px; /* Smaller logo for tiny screens */
+    }
+
+    .left-content h1 {
+        font-size: 2rem; /* Adjust header size */
+    }
+
+    .left-content p {
+        font-size: 16px;
     }
 }
