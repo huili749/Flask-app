@@ -135,3 +135,22 @@ canvas {
     width: 100%;
     height: 100%;
 }
+
+/* Responsive Styles for Smaller Screens */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack items vertically */
+        text-align: center;
+    }
+
+    .left-content,
+    .right-content {
+        min-width: 100%; /* Make each section take full width */
+        margin: 0;
+    }
+
+    button.generate-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
