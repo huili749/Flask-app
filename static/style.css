@@ -5,7 +5,6 @@ body, html {
     height: 100%;
     width: 100%;
     font-family: 'Lato', sans-serif;
-    overflow: hidden; /* Prevent scrollbars */
     display: flex;
     flex-direction: column;
 }
@@ -15,7 +14,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(90deg, #fa0e78, #ffbfbf, #0c1cff);
+    background: linear-gradient(90deg, #fa0e78, #bb4eff, #0c1cff);
     padding: 10px 40px;
     position: sticky;
     font-size: 15px;
@@ -78,13 +77,14 @@ nav .auth-buttons .login-btn:hover {
 /* Homepage-specific styles */
 .container {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     height: 100%;
 }
 
 .left-content {
     flex: 1;
-    padding: 80px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -134,4 +134,40 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+/* Small screens (phones) */
+@media (max-width: 767px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-content {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .left-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .left-content p {
+        font-size: 14px;
+    }
+
+    .generate-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .right-content {
+        height: 30%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    canvas {
+        width: 100%;
+        height: auto;
+    }
 }

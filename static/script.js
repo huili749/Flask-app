@@ -7,7 +7,7 @@ canvas.height = canvas.offsetHeight;
 
 const dots = [];
 const numDots = 60; // Increase density by increasing the grid size
-const dotRadius = 3; // Make dots larger
+const dotRadius = 2; // Make dots larger
 const mouse = { x: null, y: null };
 
 // Create a grid of dots
