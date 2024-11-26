@@ -1,14 +1,13 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-// Set canvas dimensions
+// Initialize variables
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
-
 const dots = [];
-const numDots = 60; // Increase density by increasing the grid size
-const dotRadius = 2; // Make dots larger
-const mouse = { x: null, y: null };
+const numDots = 60; // Dot density
+const dotRadius = canvas.width < 768 ? 3 : 2; // Adjust dot size for smaller screens
+const mouse = { x: null, y: null, active: false };
 
 // Create a grid of dots
 const createDots = () => {
@@ -47,13 +46,12 @@ const animateDots = () => {
         const distance = Math.sqrt(dx * dx + dy * dy);
         const buffer = 150; // Area of influence
 
-        if (distance < buffer) {
-            const factor = (buffer - distance) / buffer; // Closer dots move more
-            dot.x -= dx * 0.02 * factor; // Smooth movement
+        if (mouse.active && distance < buffer) {
+            const factor = (buffer - distance) / buffer;
+            dot.x -= dx * 0.02 * factor;
             dot.y -= dy * 0.02 * factor;
-            dot.color = `hsl(${Math.random() * 360}, 80%, 60%)`; // Brighter on hover
+            dot.color = `hsl(${Math.random() * 360}, 80%, 60%)`;
         } else {
-            // Smoothly return to original position
             dot.x += (dot.originalX - dot.x) * 0.02;
             dot.y += (dot.originalY - dot.y) * 0.02;
         }
@@ -67,14 +65,38 @@ const update = () => {
     requestAnimationFrame(update);
 };
 
-// Track mouse movement
-canvas.addEventListener('mousemove', (e) => {
+// Detect mouse movements inside the canvas
+const canvasWrapper = document.querySelector('.canvas-wrapper');
+canvasWrapper.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
+    mouse.active = true;
 });
 
-// Handle window resize
+canvasWrapper.addEventListener('mouseleave', () => {
+    mouse.active = false;
+});
+
+// Add touch support
+canvasWrapper.addEventListener('touchstart', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.touches[0].clientX - rect.left;
+    mouse.y = e.touches[0].clientY - rect.top;
+    mouse.active = true;
+});
+
+canvasWrapper.addEventListener('touchmove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.touches[0].clientX - rect.left;
+    mouse.y = e.touches[0].clientY - rect.top;
+});
+
+canvasWrapper.addEventListener('touchend', () => {
+    mouse.active = false;
+});
+
+// Handle resize events
 window.addEventListener('resize', () => {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;

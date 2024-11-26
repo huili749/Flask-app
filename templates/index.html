@@ -8,7 +8,12 @@
 </head>
 <body>
     <div class="container">
-        <div class="left-content">
+        <div class="media">
+            <div class="canvas-wrapper">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+        <div class="intro-text">
             <h1>ObjectifyAI</h1>
             <p>Revolutionizing creative workflows with AI precision, 
                 our platform empowers designers, artists, and creators to effortlessly isolate objects, remove backgrounds, 
@@ -16,9 +21,6 @@
             <a href="{{ url_for('home') }}">
                 <button class="generate-btn">Start Journey</button>
             </a>
-        </div>
-        <div class="right-content">
-            <canvas id="canvas"></canvas>
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
