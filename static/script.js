@@ -1,15 +1,17 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-// Initialize variables
+// Set canvas dimensions
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
+
+// Variables
 const dots = [];
-const numDots = 60; // Dot density
-const dotRadius = canvas.width < 768 ? 3 : 2; // Adjust dot size for smaller screens
+const numDots = 60;
+let buffer = canvas.width * 0.15; // Dynamic influence area based on canvas size
 const mouse = { x: null, y: null, active: false };
 
-// Create a grid of dots
+// Create grid of dots
 const createDots = () => {
     const spacingX = canvas.width / numDots;
     const spacingY = canvas.height / numDots;
@@ -27,24 +29,23 @@ const createDots = () => {
     }
 };
 
-// Draw dots on the canvas
+// Draw dots
 const drawDots = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     dots.forEach((dot) => {
         ctx.beginPath();
-        ctx.arc(dot.x, dot.y, dotRadius, 0, Math.PI * 2);
+        ctx.arc(dot.x, dot.y, 2, 0, Math.PI * 2);
         ctx.fillStyle = dot.color;
         ctx.fill();
     });
 };
 
-// Animate dots toward the cursor
+// Animate dots
 const animateDots = () => {
     dots.forEach((dot) => {
         const dx = dot.x - mouse.x;
         const dy = dot.y - mouse.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        const buffer = 150; // Area of influence
 
         if (mouse.active && distance < buffer) {
             const factor = (buffer - distance) / buffer;
@@ -58,14 +59,14 @@ const animateDots = () => {
     });
 };
 
-// Update the animation frame
+// Update animation frame
 const update = () => {
     drawDots();
     animateDots();
     requestAnimationFrame(update);
 };
 
-// Detect mouse movements inside the canvas
+// Track mouse movement inside canvas
 const canvasWrapper = document.querySelector('.canvas-wrapper');
 canvasWrapper.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
@@ -78,28 +79,11 @@ canvasWrapper.addEventListener('mouseleave', () => {
     mouse.active = false;
 });
 
-// Add touch support
-canvasWrapper.addEventListener('touchstart', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.touches[0].clientX - rect.left;
-    mouse.y = e.touches[0].clientY - rect.top;
-    mouse.active = true;
-});
-
-canvasWrapper.addEventListener('touchmove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.touches[0].clientX - rect.left;
-    mouse.y = e.touches[0].clientY - rect.top;
-});
-
-canvasWrapper.addEventListener('touchend', () => {
-    mouse.active = false;
-});
-
-// Handle resize events
+// Adjust buffer on resize
 window.addEventListener('resize', () => {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+    buffer = canvas.width * 0.15; // Recalculate buffer
     dots.length = 0; // Clear and recreate dots
     createDots();
 });
