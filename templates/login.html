@@ -1,17 +1,23 @@
-{% extends "layout.html" %}
+{% extends "layout_log.html" %}
 
-{% block title %}
-    Log In
-{% endblock %}
+{% block title %}Log In{% endblock %}
 
-{% block main %}
-    <form action="/login" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">Log In</button>
+{% block content %}
+<div class="login-form">
+    <div class="branding">
+        <h1>ObjectifyAI</h1>
+    </div>
+    
+    <h2>Log in</h2>
+    <p>New user? <a href="{{ url_for('signup') }}">Create an account</a></p>
+    <form action="{{ url_for('login') }}" method="POST">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit" class="btn">Continue</button>
     </form>
+</div>
 {% endblock %}

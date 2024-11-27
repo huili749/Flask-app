@@ -1,3 +1,12 @@
+:root {
+    --p: #da006a;
+    --b: #1635e5;
+    --dark: #000;
+    --white: #ffffff;
+    --light: #ccc;
+    --gray: #333;
+}
+
 /* General styles */
 body, html {
     margin: 0;
@@ -23,7 +32,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
+    background-color: var(--dark);
     overflow: hidden;
     position: relative;
 }
@@ -51,8 +60,8 @@ canvas {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #000000;
-    color: white;
+    background-color: var(--dark);
+    color: var(--white);
     text-align: center;
 }
 
@@ -64,15 +73,15 @@ canvas {
 
 .intro-text p {
     font-size: 16px;
-    color: #ccc;
+    color: var(--light);
     line-height: 1.6;
     padding: 20px 0px;
 }
 
 .generate-btn {
     font-size: 15px;
-    background-color: #da006a;
-    color: white;
+    background-color: var(--p);
+    color: var(--white);
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -81,7 +90,7 @@ canvas {
 }
 
 .generate-btn:hover {
-    background-color: #1635e5;
+    background-color: var(--b);
 }
 
 /* Navigation bar */
@@ -101,7 +110,7 @@ nav .logo a {
     text-decoration: none;
     font-size: 2rem;
     font-weight: bold;
-    color: white;
+    color: var(--white);
 }
 
 nav ul {
@@ -118,7 +127,7 @@ nav ul li {
 nav ul li a {
     text-decoration: none;
     text-transform: uppercase;
-    color: white;
+    color: var(--white);
     font-size: 0.9rem;
 }
 
@@ -134,14 +143,14 @@ nav .auth-buttons {
 
 nav .auth-buttons .signup-btn {
     text-decoration: none;
-    color: #ffffff;
+    color: var(--white);
     font-size: 0.9rem;
 }
 
 nav .auth-buttons .login-btn {
     text-decoration: none;
-    color: white;
-    background-color: #0A0A23; /* Dark navy background */
+    color: var(--white);
+    background-color: var(--dark); /* Dark navy background */
     padding: 8px 16px;
     border-radius: 20px; /* Rounded corners */
     font-size: 0.9rem;
@@ -149,7 +158,7 @@ nav .auth-buttons .login-btn {
 }
 
 nav .auth-buttons .login-btn:hover {
-    background-color: #fd1f99; /* Slightly lighter navy for hover */
+    background-color: var(--p); /* Slightly lighter navy for hover */
 }
 
 /* Responsive styles for vertical screens */
