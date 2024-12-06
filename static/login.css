@@ -4,7 +4,7 @@
     --dark: #000;
     --white: #ffffff;
     --light: #ccc;
-    --gray: #5e5e5e;
+    --gray: #696969;
 }
 /* General styles */
 body, html {
@@ -55,7 +55,15 @@ canvas {
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
+}
+
+.branding h1 a {
     color: var(--dark);
+    text-decoration: none;
+}
+
+.branding h1 a:hover {
+    color: var(--p); /* Slightly lighter navy for hover */
 }
 
 /* Heading styles */

@@ -1,12 +1,67 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Home
+    Generate
 {% endblock %}
 
 {% block content %}
-<div>
-    <h1>Welcome to ICPG</h1>
-    <p>Your AI-powered color palette generator.</p>
-</div>
+<section class="generate-section">
+    <h1>The easiest place to get colors from your photos</h1>
+    <p>Want a color scheme that perfectly matches your favorite images?</p>
+    <p>Simply upload a photo, and we'll use the hues in the photo to create your palette.</p>
+
+    <form id="upload-form" action="/generate" method="post" enctype="multipart/form-data" class="button-section">
+        <!-- Upload Button -->
+        <button id="upload-button" type="button" class="action-button">Upload</button>
+        <input id="file-input" type="file" name="file" accept="image/*" style="display: none;">
+        
+        <!-- Number Selection Button -->
+        <div class="dropdown">
+            <button id="number-button" type="button" class="action-button">Number</button>
+            <div id="dropdown-menu" class="dropdown-menu">
+                <div data-value="4">4</div>
+                <div data-value="5">5</div>
+                <div data-value="6">6</div>
+                <div data-value="7">7</div>
+                <div data-value="8">8</div>
+            </div>
+            <input id="color-count" name="color-count" type="hidden" value="5">
+        </div>
+
+        <!-- Generate Button -->
+        <button id="generate-button" type="submit" class="action-button">Generate</button>
+    </form>
+
+    {% if colors %}
+        <div class="result-section">
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+            </div>
+            <div class="color-palette">
+                <div class="color-row">
+                    {% for color in colors %}
+                    <div class="color-item">
+                        <div class="color-block" style="background-color: {{ color }};"></div>
+                        <div class="color-details">
+                            <p class="color-code">{{ color }}</p>
+                            <div class="icons">
+                                <!-- Adjust Icon -->
+                                <button class="icon-btn adjust-btn" title="Adjust Color">
+                                    🎨
+                                </button>
+                                <!-- Arrows -->
+                                <button class="icon-btn left-arrow" title="Move Left">&lt;</button>
+                                <button class="icon-btn right-arrow" title="Move Right">&gt;</button>
+                            </div>
+                            <input type="color" class="color-picker" value="{{ color }}" onchange="updateColor(this)">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </div>
+    {% endif %}
+
+</section>
 {% endblock %}

@@ -4,7 +4,7 @@
     --dark: #000;
     --white: #ffffff;
     --light: #ccc;
-    --gray: #333;
+    --gray: #696969;
 }
 
 /* General styles */
@@ -98,12 +98,25 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(90deg, #fa0e78, #bb4eff, #0c1cff);
+    background: linear-gradient(90deg, var(--p), #bb4eff, var(--b));
     padding: 10px 40px;
     position: sticky;
     font-size: 1rem;
     top: 0;
     z-index: 1000;
+}
+
+/* Dynamic gradient */
+nav[data-active-page="generate"] {
+    background: linear-gradient(90deg, var(--p), #ffffff, #bb4eff, #7d4eff,var(--b));
+}
+
+nav[data-active-page="library"] {
+    background: linear-gradient(90deg, var(--p), #bb4eff, #ffffff, #7d4eff, var(--b));
+}
+
+nav[data-active-page="history"] {
+    background: linear-gradient(90deg, var(--p), #bb4eff, #7d4eff, #ffffff, var(--b));
 }
 
 nav .logo a {
@@ -161,6 +174,196 @@ nav .auth-buttons .login-btn:hover {
     background-color: var(--p); /* Slightly lighter navy for hover */
 }
 
+/* Generate section styles */
+.generate-section {
+    padding: 20px;
+    text-align: center;
+    color: var(--dark);
+}
+
+.generate-section h1 {
+    font-size: 2rem;
+    margin: 3rem 2rem 1rem 2rem;
+}
+
+.generate-section p {
+    font-size: 1rem;
+    margin: 0 2rem;
+    line-height: 1.5rem;
+    color: var(--gray);
+}
+
+.button-section {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 1rem 0 3rem 0;
+}
+
+/* Action Buttons */
+.action-button {
+    padding: 5px 20px;
+    font-size: 16px;
+    border: 2px solid var(--light);
+    border-radius: 15px;
+    background-color: var(--p);
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect */
+.action-button:hover {
+    background-color: var(--b);
+    color: var(--white);
+}
+
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: flex; 
+    justify-content: center; 
+}
+
+/* Dropdown button */
+.dropdown .action-button {
+    padding: 5px 20px;
+    font-size: 16px;
+    border-radius: 15px;
+    background-color: var(--p);
+    color: var(--white);
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+}
+
+.dropdown .action-button:hover {
+    background-color: var(--b);
+    color: var(--white);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 120%;
+    left: 0;
+    z-index: 1000;
+    background-color: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 30%;
+}
+
+.dropdown-menu div {
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.dropdown-menu div:hover {
+    background-color: var(--white);
+}
+
+/* Show dropdown when active */
+.dropdown.active .dropdown-menu {
+    display: block;
+}
+
+/* Result Section */
+.result-section {
+    max-width: 40rem; 
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Image Container */
+.image-container {
+    width: 40rem; 
+    height: 40rem; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+    position: relative;
+}
+
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Color Palette */
+.color-palette {
+    width: 100%;
+    margin: 1rem 0 3rem 0;
+
+}
+
+/* Row for Color Bars */
+.color-row {
+    display: flex;
+    width: 100%;
+}
+
+/* Individual color item */
+.color-item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    width: 100px; /* Fixed width for consistency */
+    background-color: rgb(238, 235, 235)
+}
+
+/* Color block */
+.color-block {
+    width: 100%;
+    height: 30px;
+}
+
+/* Color details (code and controls) */
+.color-details {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.color-details .color-code {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin: 0;
+    line-height: 1rem;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1);
+}
+
+.color-picker {
+    position: absolute;
+    display: none; /* Hidden by default */
+    z-index: 10; /* Ensures it appears above other elements */
+}
+
 /* Responsive styles for vertical screens */
 @media (max-aspect-ratio: 1/1) {
     body, html {
@@ -211,6 +414,42 @@ nav .auth-buttons .login-btn:hover {
     nav .auth-buttons .login-btn {
         font-size: 0.8rem;
         padding: 6px 12px; /* Reduce button padding */
+    }
+}
+
+@media (max-width: 768px) {
+    .button-section {
+        gap: 20px; 
+    }
+    .action-button {
+        padding: 8px 16px; 
+        font-size: 14px; 
+    }
+    .dropdown { 
+        font-size: 14px;
+    }
+    .dropdown .action-button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .button-section {
+        flex-direction: column; 
+        align-items: center; 
+        gap: 15px; 
+    }
+    .dropdown {
+        width: 80%; 
+        font-size: 12px;
+    }
+    .dropdown .action-button {
+        font-size: 12px;
+    }
+    .action-button {
+        padding: 6px 12px;
+        font-size: 12px;
+        width: 80%;
     }
 }
 
@@ -276,5 +515,59 @@ nav .auth-buttons .login-btn:hover {
     nav .auth-buttons .login-btn {
         font-size: 0.7rem;
         padding: 4px 4px; /* Reduce button size */
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .result-section {
+        max-width: 90%; 
+    }
+
+    .image-container {
+        width: 100%;
+        height: 100vw; 
+    }
+
+    .color-palette {
+        margin-top: 0.5rem;
+    }
+
+    .color-box {
+        height: 2rem; 
+    }
+
+    .color-code {
+        font-size: 0.8rem; 
+    }
+}
+
+@media (max-width: 480px) {
+    .result-section {
+        max-width: 100%;
+        padding: 0 1rem; 
+    }
+
+    .image-container {
+        width: 100%;
+        height: 100vw; 
+    }
+
+    .image-container img {
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+    }
+
+    .color-palette {
+        margin-top: 0.5rem; 
+    }
+
+    .color-box {
+        height: 1.5rem; 
+    }
+
+    .color-code {
+        font-size: 0.7rem; 
     }
 }
