@@ -6,33 +6,38 @@
 
 {% block content %}
 <section class="generate-section">
-    <h1>The easiest place to get colors from your photos</h1>
-    <p>Want a color scheme that perfectly matches your favorite images?</p>
-    <p>Simply upload a photo, and we'll use the hues in the photo to create your palette.</p>
-
-    <form id="upload-form" action="/generate" method="post" enctype="multipart/form-data" class="button-section">
-        <!-- Upload Button -->
-        <button id="upload-button" type="button" class="action-button">Upload</button>
-        <input id="file-input" type="file" name="file" accept="image/*" style="display: none;">
-        
-        <!-- Number Selection Button -->
-        <div class="dropdown">
-            <button id="number-button" type="button" class="action-button">Number</button>
-            <div id="dropdown-menu" class="dropdown-menu">
-                <div data-value="4">4</div>
-                <div data-value="5">5</div>
-                <div data-value="6">6</div>
-                <div data-value="7">7</div>
-                <div data-value="8">8</div>
-            </div>
-            <input id="color-count" name="color-count" type="hidden" value="5">
+    <div class="left-content">
+        <h1>The easiest place to get colors from your photos</h1>
+        <div class="intro">
+            <p>Want a color scheme that perfectly matches your favorite images?</p>
+            <p>Simply upload a photo, and we'll use the hues in the photo to create your palette.</p>
         </div>
 
-        <!-- Generate Button -->
-        <button id="generate-button" type="submit" class="action-button">Generate</button>
-    </form>
+        <form id="upload-form" action="/generate" method="post" enctype="multipart/form-data" class="button-section">
+            <!-- Upload Button -->
+            <button id="upload-button" type="button" class="action-button">Upload</button>
+            <input id="file-input" type="file" name="file" accept="image/*" style="display: none;">
+            
+            <!-- Number Selection Button -->
+            <div class="dropdown">
+                <button id="number-button" type="button" class="action-button">Number</button>
+                <div id="dropdown-menu" class="dropdown-menu">
+                    <div data-value="4">4</div>
+                    <div data-value="5">5</div>
+                    <div data-value="6">6</div>
+                    <div data-value="7">7</div>
+                    <div data-value="8">8</div>
+                </div>
+                <input id="color-count" name="color-count" type="hidden" value="5">
+            </div>
 
-    {% if colors %}
+            <!-- Generate Button -->
+            <button id="generate-button" type="submit" class="action-button">Generate</button>
+        </form>
+    </div>
+
+    <div class="right-content">
+        {% if colors %}
         <div class="result-section">
             <div class="image-container">
                 <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
@@ -46,12 +51,16 @@
                             <p class="color-code">{{ color }}</p>
                             <div class="icons">
                                 <!-- Adjust Icon -->
-                                <button class="icon-btn adjust-btn" title="Adjust Color">
-                                    🎨
+                                <button class="icon-btn-1 adjust-btn" title="Adjust Color">
+                                    <i class="fa-solid fa-sliders"></i>
+                                </button>
+                                <!-- Copy Icon -->
+                                <button class="icon-btn-1 copy-btn" title="Copy Color Code">
+                                    <i class="fa-regular fa-copy"></i>
                                 </button>
                                 <!-- Arrows -->
-                                <button class="icon-btn left-arrow" title="Move Left">&lt;</button>
-                                <button class="icon-btn right-arrow" title="Move Right">&gt;</button>
+                                <button class="icon-btn-1 left-arrow" title="Move Left">&lt;</button>
+                                <button class="icon-btn-1 right-arrow" title="Move Right">&gt;</button>
                             </div>
                             <input type="color" class="color-picker" value="{{ color }}" onchange="updateColor(this)">
                         </div>
@@ -59,9 +68,40 @@
                     {% endfor %}
                 </div>
             </div>
-            
+            <div class="button-section">
+                <form id="save-library-form" action="/save_palette" method="post">
+                    <input type="hidden" name="image_path" value="{{ url_for('static', filename='uploads/' + filename) }}">
+                    <input type="hidden" name="colors" value="{{ colors }}">
+                    <button id="save-library-button" type="button" class="action-button">Save to Library</button>
+                </form>
+                <button id="download-button" type="button" class="action-button">
+                    Download
+                </button>
+            </div>
         </div>
-    {% endif %}
-
+        {% endif %}
+    </div>
 </section>
+
+<!-- Modal for selecting/creating category -->
+<div id="save-modal" class="modal">
+    <div class="modal-content">
+        <h2>Create or Select a Category</h2>
+        <label for="category-select">Choose an existing category:</label>
+        <select id="category-select" name="category">
+            <option value="">-- Select a Category --</option>
+            {% for category in categories %}
+            <option value="{{ category.name }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <label for="new-category">Or create a new category:</label>
+        <input type="text" id="new-category" name="new_category" placeholder="Enter a new category name">
+        <div class="modal-buttons">
+            <button id="save-category" class="action-button">Save</button>
+            <button id="close-modal" class="action-button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/generate.js') }}" defer></script>
 {% endblock %}

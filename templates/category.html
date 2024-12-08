@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ category_name }}{% endblock %}
+
+{% block content %}
+<section class="category-page">
+    <header class="category-header">
+        <h1>{{ category_name }}</h1>
+    </header>
+
+    <div class="categories-grid">
+        {% for palette in palettes %}
+        <div class="category-item">
+            <div class="palette-container">
+                <img src="{{ url_for('static', filename=palette.image_path) }}" alt="Palette Image">
+                <div class="palette-hover-icons">
+                    <!-- Download Icon -->
+                    <button class="icon-btn download-icon" data-palette-id="{{ palette.id }}" title="Download">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+                    <!-- Delete Icon -->
+                    <button class="icon-btn delete-icon" data-palette-id="{{ palette.id }}" title="Delete">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <p> {{ palette['colors'] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/category_edit.js') }}" defer></script>
+{% endblock %}

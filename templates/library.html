@@ -5,8 +5,69 @@
 {% endblock %}
 
 {% block content %}
-<div>
-    <h1>Welcome to ICPG</h1>
-    <p>Your AI-powered color palette generator.</p>
+<section class="library-page">
+    <header class="library-header">
+        <h1>{{ g.username }}'s Library</h1>
+        <div class="button-section">
+            <a href="{{ url_for('library', sort='name_asc') }}" class="action-button">Sort A-Z</a>
+            <a href="{{ url_for('library', sort='name_desc') }}" class="action-button">Sort Z-A</a>
+            <a href="{{ url_for('library', sort='recent') }}" class="action-button">Sort by Recent</a>
+            <button id="add-category" class="action-button">Add Category</button>
+        </div>        
+    </header>
+
+    <!-- Categories grid -->
+    <div class="library-grid">
+        {% for category in categories %}
+        <div class="library-item" data-category-id="{{ category.id }}">
+            <a href="{{ url_for('category_page', category_name=category.name) }}" class="library-item-link">
+                <div class="image-grid">
+                    {% for palette in category.palettes %}
+                    <div class="image-placeholder">
+                        <img src="{{ url_for('static', filename=palette.image_path) }}" alt="Palette Image">
+                    </div>
+                    {% endfor %}
+                    {% for _ in range(4 - category.palettes|length) %}
+                    <div class="image-placeholder empty-placeholder"></div>
+                    {% endfor %}
+                </div>
+                <div class="category-details">
+                    <h3 class="category-name">{{ category.name }}</h3>
+                    <p class="palette-count">{{ category.palette_count }} Palettes</p>
+                </div>
+            </a>
+            <!-- Pencil Icon -->
+            <button class="edit-category-button" title="Edit Category">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Modal for selecting/creating category -->
+<div id="save-modal" class="modal">
+    <div class="modal-content">
+        <h2>Create a Category</h2>
+        <input type="text" id="new-category" name="new_category" placeholder="Enter a new category name">
+        <div class="modal-buttons">
+            <button id="save-category" class="action-button">Save</button>
+            <button id="close-modal" class="action-button">Cancel</button>
+        </div>
+    </div>
 </div>
+
+<!-- Modal for editing category -->
+<div id="edit-modal" class="modal">
+    <div class="modal-content">
+        <h2>Edit Category Name</h2>
+        <input type="text" id="edit-category-name" placeholder="Enter new category name">
+        <div class="modal-buttons">
+            <button id="save-edit" class="action-button">Save</button>
+            <button id="close-edit-modal" class="action-button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/library.js') }}" defer></script>
 {% endblock %}

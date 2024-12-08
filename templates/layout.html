@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=0.5, user-scalable=yes">
     <title>{% block title %}ObjectifyAI{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script defer src="{{ url_for('static', filename='upload.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/nav.js') }}"></script>
 </head>
 
 <body>
@@ -16,11 +17,15 @@
         <ul>
             <li><a href="{{ url_for('generate') }}" data-page="generate">Generate</a></li>
             <li><a href="{{ url_for('library') }}" data-page="library">Library</a></li>
-            <li><a href="{{ url_for('create') }}" data-page="history">History</a></li>
         </ul>
         <div class="auth-buttons">
-            <a href="{{ url_for('signup') }}" class="signup-btn">Sign up</a>
-            <a href="{{ url_for('login') }}" class="login-btn">Log in</a>
+            {% if g.username %}
+                <span class="user-info">Welcome, {{ g.username }}</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Log out</a>
+            {% else %}
+                <a href="{{ url_for('signup') }}" class="signup-btn">Sign up</a>
+                <a href="{{ url_for('login') }}" class="login-btn">Log in</a>
+            {% endif %}
         </div>
     </nav>
     <div>

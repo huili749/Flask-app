@@ -144,6 +144,11 @@ nav ul li a {
     font-size: 0.9rem;
 }
 
+nav ul li a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 nav ul li a:hover {
     text-decoration: underline;
 }
@@ -160,7 +165,7 @@ nav .auth-buttons .signup-btn {
     font-size: 0.9rem;
 }
 
-nav .auth-buttons .login-btn {
+nav .auth-buttons .login-btn, nav .auth-buttons .logout-btn {
     text-decoration: none;
     color: var(--white);
     background-color: var(--dark); /* Dark navy background */
@@ -170,23 +175,66 @@ nav .auth-buttons .login-btn {
     transition: background-color 0.3s ease;
 }
 
-nav .auth-buttons .login-btn:hover {
+nav .auth-buttons .login-btn:hover, nav .auth-buttons .logout-btn:hover {
     background-color: var(--p); /* Slightly lighter navy for hover */
+}
+
+.user-info {
+    font-size: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+    color: var(--white);
 }
 
 /* Generate section styles */
 .generate-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    padding: 0;
+    margin: 0;
+}
+
+/* Left section styling */
+.left-content {
+    flex: 1; /* Take up half the width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
+    background-color: var(--dark);
+    color: var(--white); /* Text color for contrast */
+    height: 100vh; /* Full viewport height */
+    box-sizing: border-box; /* Ensure padding is included in height */
+}
+
+/* Right section styling */
+.right-content {
+    flex: 1; /* Take up half the width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: var(--dark); /* Text color for contrast */
     text-align: center;
-    color: var(--dark);
+    height: 100vh; /* Full viewport height */
+    box-sizing: border-box;
 }
 
-.generate-section h1 {
+.left-content h1 {
     font-size: 2rem;
-    margin: 3rem 2rem 1rem 2rem;
+    margin: 3rem 2rem;
 }
 
-.generate-section p {
+.left-content .intro {
+    margin: 2rem 2rem;
+}
+
+.left-content p {
     font-size: 1rem;
     margin: 0 2rem;
     line-height: 1.5rem;
@@ -197,7 +245,6 @@ nav .auth-buttons .login-btn:hover {
     display: flex;
     justify-content: center;
     gap: 30px;
-    margin: 1rem 0 3rem 0;
 }
 
 /* Action Buttons */
@@ -210,6 +257,7 @@ nav .auth-buttons .login-btn:hover {
     color: var(--white);
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
 }
 
 /* Hover effect */
@@ -250,6 +298,7 @@ nav .auth-buttons .login-btn:hover {
     left: 0;
     z-index: 1000;
     background-color: var(--white);
+    color: var(--gray);
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 30%;
@@ -300,9 +349,10 @@ nav .auth-buttons .login-btn:hover {
 }
 
 /* Color Palette */
-.color-palette {
+.result-section .color-palette {
+    max-width: 40rem; 
     width: 100%;
-    margin: 1rem 0 3rem 0;
+    margin: 1rem 0 1rem 0;
 
 }
 
@@ -319,7 +369,7 @@ nav .auth-buttons .login-btn:hover {
     flex-direction: column;
     align-items: center;
     width: 100px; /* Fixed width for consistency */
-    background-color: rgb(238, 235, 235)
+    /*background-color: rgb(238, 235, 235)*/
 }
 
 /* Color block */
@@ -337,7 +387,7 @@ nav .auth-buttons .login-btn:hover {
 .color-details .color-code {
     font-size: 0.8rem;
     color: var(--gray);
-    margin: 0;
+    margin: 0 0 0.5rem 0;
     line-height: 1rem;
 }
 
@@ -347,14 +397,13 @@ nav .auth-buttons .login-btn:hover {
     align-items: center;
 }
 
-.icon-btn {
+.icon-btn-1 {
     background: none;
     border: none;
-    font-size: 1rem;
     cursor: pointer;
 }
 
-.icon-btn:hover {
+.icon-btn-1:hover {
     transform: scale(1.1);
 }
 
@@ -362,6 +411,240 @@ nav .auth-buttons .login-btn:hover {
     position: absolute;
     display: none; /* Hidden by default */
     z-index: 10; /* Ensures it appears above other elements */
+}
+
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 确保在其他元素之上 */
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+}
+
+.modal-buttons button {
+    margin: 10px;
+}
+
+.modal-content input,
+.modal-content select {
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.library-page, .category-page {
+    padding: 20px;
+    font-family: 'Lato', sans-serif;
+}
+
+.library-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.category-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 2rem 3rem 2rem;
+}
+
+.library-header h1 {
+    font-size: 2rem;
+    margin: 3rem 2rem;
+}
+
+.library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.library-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+.library-item-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.library-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.edit-category-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    border-radius: 50%;
+    padding: 8px;
+    font-size: 1.2rem;
+    display: none;
+    cursor: pointer;
+}
+
+.library-item:hover .edit-category-button {
+    display: block;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 120px);
+    gap: 5px;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+.image-placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.empty-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #d3d3d3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-details {
+    padding: 10px;
+    text-align: left;
+}
+
+.category-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    text-align: left;
+}
+
+.palette-count {
+    font-size: 14px;
+    color: #888;
+    margin: 5px 0 0;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: 20px;
+}
+
+.category-item {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.category-item p {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    margin: 0.5rem 1rem;
+}
+
+.palette-container {
+    position: relative;
+    overflow: visible;
+}
+
+.palette-container img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.2s ease;
+}
+
+.palette-container:hover img {
+    transform: scale(1.05);
+}
+
+.palette-hover-icons {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease;
+}
+
+.palette-container:hover .palette-hover-icons {
+    opacity: 1;
+    z-index: 10; 
+    pointer-events: all;
+}
+
+.icon-btn {
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+    position: relative; 
+    z-index: 100;
+}
+
+.icon-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
 }
 
 /* Responsive styles for vertical screens */

@@ -1,69 +1,39 @@
-import requests
+import os
 
-from flask import redirect, render_template, session
+from flask import session, redirect, url_for, flash
 from functools import wraps
-
-
-def apology(message, code=400):
-    """Render message as an apology to user."""
-
-    def escape(s):
-        """
-        Escape special characters.
-
-        https://github.com/jacebrowning/memegen#special-characters
-        """
-        for old, new in [
-            ("-", "--"),
-            (" ", "-"),
-            ("_", "__"),
-            ("?", "~q"),
-            ("%", "~p"),
-            ("#", "~h"),
-            ("/", "~s"),
-            ('"', "''"),
-        ]:
-            s = s.replace(old, new)
-        return s
-
-    return render_template("apology.html", top=code, bottom=escape(message)), code
-
+from PIL import Image, ImageDraw
 
 def login_required(f):
-    """
-    Decorate routes to require login.
-
-    https://flask.palletsprojects.com/en/latest/patterns/viewdecorators/
-    """
-
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
+        if "user_id" not in session:
+            flash("Please log in to access this page.")
+            return redirect(url_for('login'))
         return f(*args, **kwargs)
-
     return decorated_function
 
+def save_palette_image(colors, path):
+    """Generate a palette image and save it to the specified path."""
+    # Image dimensions
+    block_width = 200  # Width of each color block
+    block_height = 200  # Height of the image
+    image_width = block_width * len(colors)
+    image_height = block_height
 
-def lookup(symbol):
-    """Look up quote for symbol."""
-    url = f"https://finance.cs50.io/quote?symbol={symbol.upper()}"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Raise an error for HTTP error responses
-        quote_data = response.json()
-        return {
-            "name": quote_data["companyName"],
-            "price": quote_data["latestPrice"],
-            "symbol": symbol.upper()
-        }
-    except requests.RequestException as e:
-        print(f"Request error: {e}")
-    except (KeyError, ValueError) as e:
-        print(f"Data parsing error: {e}")
-    return None
+    # Create a new image
+    image = Image.new("RGB", (image_width, image_height), "white")
+    draw = ImageDraw.Draw(image)
 
+    # Draw each color as a block
+    for i, color in enumerate(colors):
+        x0 = i * block_width
+        x1 = x0 + block_width
+        draw.rectangle([x0, 0, x1, block_height], fill=color)
 
-def usd(value):
-    """Format value as USD."""
-    return f"${value:,.2f}"
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+
+    # Save the image
+    image.save(path)
+
