@@ -98,17 +98,17 @@ def save_palette():
 
     # Handle category: create or retrieve ID
     if new_category_name:
-        # 检查类别是否已存在
+        # Check if the category exists
         existing_category = db.execute("SELECT id FROM categories WHERE name = ?", new_category_name)
         if not existing_category:
-            # 尝试插入新类别
+            # Try to insert a new category
             try:
                 db.execute("INSERT INTO categories (name) VALUES (?)", new_category_name)
-                db.commit()  # 确保事务被提交
+                db.commit()  # Ensure the submission
                 print(f"Inserted new category: {new_category_name}")
             except Exception as e:
                 print(f"Error inserting new category: {e}")
-            # 再次查询新类别的 ID
+            # Fetch the ID for the new item
             category = db.execute("SELECT id FROM categories WHERE name = ?", new_category_name)
             if category:
                 category_id = category[0]["id"]
@@ -116,7 +116,7 @@ def save_palette():
             else:
                 print("Failed to retrieve newly inserted category.")
         else:
-            # 如果类别已存在
+            # If exists
             category_id = existing_category[0]["id"]
             print(f"Using existing category: {new_category_name}")
 
@@ -129,8 +129,6 @@ def save_palette():
     else:
         flash("No category provided!")
         return redirect(url_for('generate'))
-
-    print(f"Final category ID: {category_id}")  # Debug 8
 
     # Generate palette image and save it
     palette_filename = f"palette_{int(time.time())}.png"
@@ -145,8 +143,6 @@ def save_palette():
         category_id,
         str(colors)
     )
-
-    print(f"Palette saved with image path: {relative_path}")  # Debug 9
 
     flash("Palette saved to library!")
     return redirect(url_for('library'))
@@ -236,6 +232,23 @@ def update_category(category_id):
     # Update the category name
     db.execute("UPDATE categories SET name = ? WHERE id = ?", new_name, category_id)
     return jsonify({"success": True})
+
+@app.route('/delete_category/<int:category_id>', methods=["DELETE"])
+@login_required
+def delete_category(category_id):
+    """Delete a category and all its related palettes."""
+    # Check if the category exists
+    category = db.execute("SELECT * FROM categories WHERE id = ?", category_id)
+    if not category:
+        return jsonify({"error": "Category not found!"}), 404
+
+    # Delete all palettes related to this category
+    db.execute("DELETE FROM palettes WHERE category_id = ?", category_id)
+
+    # Delete the category itself
+    db.execute("DELETE FROM categories WHERE id = ?", category_id)
+
+    return jsonify({"success": True, "message": "Category and related palettes deleted successfully!"}), 200
 
 @app.route('/palette/<int:palette_id>')
 @login_required

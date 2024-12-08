@@ -63,7 +63,7 @@ canvas {
 }
 
 .branding h1 a:hover {
-    color: var(--p); /* Slightly lighter navy for hover */
+    color: var(--p); 
 }
 
 /* Heading styles */
@@ -128,7 +128,7 @@ canvas {
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s;
-    float: right; /* Align button to the right */
+    float: right;
 }
 
 .login-form .btn:hover {

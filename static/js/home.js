@@ -83,8 +83,8 @@ canvasWrapper.addEventListener('mouseleave', () => {
 window.addEventListener('resize', () => {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
-    buffer = canvas.width * 0.15; // Recalculate buffer
-    dots.length = 0; // Clear and recreate dots
+    buffer = canvas.width * 0.15; 
+    dots.length = 0; 
     createDots();
 });
 

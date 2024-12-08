@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const editModal = document.getElementById("edit-modal");
     const editCategoryNameInput = document.getElementById("edit-category-name");
     const saveEditButton = document.getElementById("save-edit");
+    const deleteCategoryButton = document.getElementById("delete-icon");
     const closeEditModalButton = document.getElementById("close-edit-modal");
 
     let currentCategoryId = null;
@@ -109,4 +110,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Error updating category name:", err);
             });
     });
+
+    // Delete category and its palettes
+    deleteCategoryButton.addEventListener("click", () => {
+        if (!currentCategoryId) {
+            alert("No category selected for deletion!");
+            return;
+        }
+
+        if (confirm("Are you sure you want to delete this category and all its palettes?")) {
+            fetch(`/delete_category/${currentCategoryId}`, {
+                method: "DELETE",
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        alert(data.message || "Category deleted successfully!");
+                        editModal.style.display = "none";
+
+                        // Remove the category from the UI
+                        const categoryElement = document.querySelector(
+                            `.library-item[data-category-id="${currentCategoryId}"]`
+                        );
+                        if (categoryElement) {
+                            categoryElement.remove();
+                        }
+                    } else {
+                        alert("Failed to delete category.");
+                    }
+                })
+                .catch((err) => {
+                    console.error("Error deleting category:", err);
+                });
+        }
+    });  
 });

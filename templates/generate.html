@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/generate.css') }}">
+
 <section class="generate-section">
     <div class="left-content">
         <h1>The easiest place to get colors from your photos</h1>
         <div class="intro">
-            <p>Want a color scheme that perfectly matches your favorite images?</p>
-            <p>Simply upload a photo, and we'll use the hues in the photo to create your palette.</p>
+            <p>Want a color scheme that perfectly matches your favorite images?
+            Simply upload a photo, and we'll use the hues in the photo to create your palette.</p>
         </div>
 
         <form id="upload-form" action="/generate" method="post" enctype="multipart/form-data" class="button-section">

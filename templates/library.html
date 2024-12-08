@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/library.css') }}">
+
 <section class="library-page">
     <header class="library-header">
         <h1>{{ g.username }}'s Library</h1>
@@ -60,10 +62,11 @@
 <!-- Modal for editing category -->
 <div id="edit-modal" class="modal">
     <div class="modal-content">
-        <h2>Edit Category Name</h2>
+        <h2>Edit Category</h2>
         <input type="text" id="edit-category-name" placeholder="Enter new category name">
         <div class="modal-buttons">
             <button id="save-edit" class="action-button">Save</button>
+            <button id="delete-icon" class="action-button">Delete</button>
             <button id="close-edit-modal" class="action-button">Cancel</button>
         </div>
     </div>
