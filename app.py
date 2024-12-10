@@ -71,6 +71,7 @@ def generate():
             response = render_template('generate.html', colors=hex_colors, filename=filename, categories=categories)
             
             return response
+        
     categories = db.execute("SELECT name FROM categories")
     return render_template('generate.html', categories=categories)
 
